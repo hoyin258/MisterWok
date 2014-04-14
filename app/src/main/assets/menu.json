@@ -10,7 +10,7 @@
           "desc": "babab",
           "spicy": "N",
           "image":"https://raw.githubusercontent.com/hoyin258/Misterwok/master/app/src/main/res/drawable-xhdpi/demo_1.jpg",
-          "type": [
+          "types": [
             {
               "unit": "Large",
               "price": "9.45"
@@ -23,7 +23,7 @@
           "desc": "babab",
           "spicy": "Y",
           "image":"https://raw.githubusercontent.com/hoyin258/Misterwok/master/app/src/main/res/drawable-xhdpi/demo_1.jpg",
-          "type": [
+          "types": [
             {
               "unit": "Large",
               "price": "9.10"
@@ -42,7 +42,7 @@
           "desc": "babab",
           "spicy": "N",
           "image":"https://raw.githubusercontent.com/hoyin258/Misterwok/master/app/src/main/res/drawable-xhdpi/demo_1.jpg",
-          "type": [
+          "types": [
             {
               "unit": "Large",
               "price": "9.45"
@@ -59,7 +59,7 @@
           "desc": "babab",
           "spicy": "N",
           "image":"https://raw.githubusercontent.com/hoyin258/Misterwok/master/app/src/main/res/drawable-xhdpi/demo_1.jpg",
-          "type": [
+          "types": [
             {
               "unit": "Large",
               "price": "9.10"
