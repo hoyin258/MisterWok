@@ -1,54 +1,72 @@
-[
-  {
-    "categories": [
-      {
-        "name": "Mister Wok special",
-        "desc": "with pork fried rice and egg roll",
-        "items": [
-          {
-            "menu_id": "S1",
-            "name": "Sesame Chicken",
-            "desc": "babab",
-            "unit": "Large",
-            "price": "9.45",
-            "spicy": "N"
-          },
-          {
-            "menu_id": "S2",
-            "name": "General Tso Chicken",
-            "desc": "babab",
-            "unit": "Large",
-            "price": "10.45",
-            "spicy": "Y"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "categories": [
-      {
-        "name": "Mister Wok special",
-        "desc": "with pork fried rice and egg roll",
-        "items": [
-          {
-            "menu_id": "S1",
-            "name": "Sesame Chicken",
-            "desc": "babab",
-            "unit": "Large",
-            "price": "9.45",
-            "spicy": "N"
-          },
-          {
-            "menu_id": "S2",
-            "name": "General Tso Chicken",
-            "desc": "babab",
-            "unit": "Large",
-            "price": "10.45",
-            "spicy": "Y"
-          }
-        ]
-      }
-    ]
-  }
-]
+{
+  "categories": [
+    {
+      "name": "Mister Wok special",
+      "desc": "with pork fried rice and egg roll",
+      "items": [
+        {
+          "menu_id": "S1",
+          "name": "Sesame Chicken",
+          "desc": "babab",
+          "spicy": "N",
+          "type": [
+            {
+              "unit": "Large",
+              "price": "9.45"
+            }
+          ]
+        },
+        {
+          "menu_id": "S2",
+          "name": "General Tso Chicken",
+          "desc": "babab",
+          "spicy": "Y",
+          "type": [
+            {
+              "unit": "Large",
+              "price": "9.10"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Chicken",
+      "desc": "with White Rice",
+      "items": [
+        {
+          "menu_id": "45",
+          "name": "Chicken with Chinese Veg",
+          "desc": "babab",
+          "spicy": "N",
+          "type": [
+            {
+              "unit": "Large",
+              "price": "9.45"
+            },
+            {
+              "unit": "Small",
+              "price": "3.45"
+            }
+          ]
+        },
+        {
+          "menu_id": "48",
+          "name": "Chicken with Garlice",
+          "desc": "babab",
+          "spicy": "N",
+          "type": [
+            {
+              "unit": "Large",
+              "price": "9.10"
+            },
+            {
+              "unit": "Small",
+              "price": "6.10"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
