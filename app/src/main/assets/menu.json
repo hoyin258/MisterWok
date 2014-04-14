@@ -1,0 +1,25 @@
+{
+	"categroy":{
+		"name": "Mister Wok special",
+		"desc": "with pork fried rice and egg roll",
+		"items":[
+		{
+			"menu_id": "S1",
+			"name": "Sesame Chicken",
+			"desc": "babab",
+			"unit": "Large",
+			"price":"9.45",
+			"spicy": "N",
+			},
+			{
+				"menu_id": "S2",
+				"name": "General Tso Chicken",
+				"desc": "babab",
+				"unit": "Large",
+				"price":"10.45",
+				"spicy": "Y",
+			}
+			]
+		}
+	}
+}
