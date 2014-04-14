@@ -9,7 +9,7 @@
           "name": "Sesame Chicken",
           "desc": "babab",
           "spicy": "N",
-          "image":"",
+          "image":"https://raw.githubusercontent.com/hoyin258/Misterwok/master/app/src/main/res/drawable-xhdpi/demo_1.jpg",
           "type": [
             {
               "unit": "Large",
@@ -22,7 +22,7 @@
           "name": "General Tso Chicken",
           "desc": "babab",
           "spicy": "Y",
-          "image":"",
+          "image":"https://raw.githubusercontent.com/hoyin258/Misterwok/master/app/src/main/res/drawable-xhdpi/demo_1.jpg",
           "type": [
             {
               "unit": "Large",
@@ -41,7 +41,7 @@
           "name": "Chicken with Chinese Veg",
           "desc": "babab",
           "spicy": "N",
-          "image":"",
+          "image":"https://raw.githubusercontent.com/hoyin258/Misterwok/master/app/src/main/res/drawable-xhdpi/demo_1.jpg",
           "type": [
             {
               "unit": "Large",
@@ -58,7 +58,7 @@
           "name": "Chicken with Garlice",
           "desc": "babab",
           "spicy": "N",
-          "image":"",
+          "image":"https://raw.githubusercontent.com/hoyin258/Misterwok/master/app/src/main/res/drawable-xhdpi/demo_1.jpg",
           "type": [
             {
               "unit": "Large",
