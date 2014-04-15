@@ -1,9 +1,11 @@
 {
   "categories": [
     {
+      "id": 1,
       "name": "Mister Wok special"
     },
     {
+      "id": 2,
       "name": "Chicken"
     }
   ]
