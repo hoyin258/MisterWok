@@ -3,12 +3,12 @@
     {
       "id": 1,
       "name": "Mister Wok special",
-      "name": "with Fried Rice"
+      "desc": "with Fried Rice"
     },
     {
       "id": 2,
       "name": "Chicken",
-      "name": "with White Price"
+      "desc": "with White Price"
     }
   ]
 }
