@@ -1,0 +1,30 @@
+{
+  "items": [
+    {
+      "menu_id": "S1",
+      "name": "Sesame Chicken",
+      "desc": "babab",
+      "spicy": "N",
+      "image": "https://raw.githubusercontent.com/hoyin258/Misterwok/master/app/src/main/res/drawable-xhdpi/demo_1.jpg",
+      "types": [
+        {
+          "unit": "Large",
+          "price": "9.45"
+        }
+      ]
+    },
+    {
+      "menu_id": "S2",
+      "name": "General Tso Chicken",
+      "desc": "babab",
+      "spicy": "Y",
+      "image": "https://raw.githubusercontent.com/hoyin258/Misterwok/master/app/src/main/res/drawable-xhdpi/demo_1.jpg",
+      "types": [
+        {
+          "unit": "Large",
+          "price": "9.10"
+        }
+      ]
+    }
+  ]
+}

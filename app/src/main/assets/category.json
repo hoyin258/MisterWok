@@ -2,11 +2,13 @@
   "categories": [
     {
       "id": 1,
-      "name": "Mister Wok special"
+      "name": "Mister Wok special",
+      "name": "with Fried Rice"
     },
     {
       "id": 2,
-      "name": "Chicken"
+      "name": "Chicken",
+      "name": "with White Price"
     }
   ]
 }
