@@ -7,6 +7,10 @@
       "spicy": "N",
       "image": "https://raw.githubusercontent.com/hoyin258/Misterwok/master/app/src/main/res/drawable-xhdpi/demo_1.jpg",
       "types": [
+      {
+                "unit": "Small",
+                "price": "4.45"
+              },
         {
           "unit": "Large",
           "price": "9.45"
