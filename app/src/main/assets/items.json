@@ -7,10 +7,10 @@
       "spicy": "N",
       "image": "https://raw.githubusercontent.com/hoyin258/Misterwok/master/app/src/main/res/drawable-xhdpi/demo_1.jpg",
       "types": [
-      {
-                "unit": "Small",
-                "price": "4.45"
-              },
+        {
+            "unit": "Small",
+            "price": "4.45"
+        },
         {
           "unit": "Large",
           "price": "9.45"
@@ -29,6 +29,19 @@
           "price": "9.10"
         }
       ]
-    }
+    },
+         {
+           "menu_id": "S3",
+           "name": "Chicken with broccoli",
+           "desc": "babab",
+           "spicy": "Y",
+           "image": "https://raw.githubusercontent.com/hoyin258/Misterwok/master/app/src/main/res/drawable-xhdpi/demo_1.jpg",
+           "types": [
+             {
+               "unit": "Large",
+               "price": "9.10"
+             }
+           ]
+         }
   ]
 }
