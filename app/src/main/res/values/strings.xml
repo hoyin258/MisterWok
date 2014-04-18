@@ -34,5 +34,6 @@
     <string name="dialog_thank_you_title">Thank You</string>
     <string name="dialog_thank_you_message">It takes about 5-10 minutes. \nSee you later :) </string>
     <string name="dialog_thank_confirm">OK</string>
+    <string name="toast_item_detail_added">Added</string>
 
 </resources>

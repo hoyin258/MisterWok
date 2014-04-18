@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -68,6 +69,8 @@ public class ItemDetailFragment extends DialogFragment {
                                 new CartItemSQLiteHelper(getActivity()).addCartItem(contentValues);
                                 Intent intent = new Intent(CategoryFragment.KEY_CART_BROADCAST_RECEIVER);
                                 getActivity().sendBroadcast(intent);
+
+                                Toast.makeText(getActivity(), getString(R.string.toast_item_detail_added), Toast.LENGTH_SHORT).show();
                             }
                         }
                 )
