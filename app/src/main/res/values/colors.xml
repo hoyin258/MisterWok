@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--<color name="app_color">#428bca</color>-->
+    <!--<color name="actionbar_text">#fff</color>-->
+    <!--<color name="actionbar_background">#428bca</color>-->
+    <!--<color name="bg_item_list_bot">#DD428bca</color>-->
+
+    <color name="app_color">#D0021B</color>
+    <color name="actionbar_text">#fff</color>
+    <color name="actionbar_background">#D0021b</color>
+    <color name="bg_item_list_bot">#DDD0021b</color>
+    <color name="bg_left_menu">#DDffffff</color>
+    <color name="divider_left_menu">#DDD0021b</color>
+    <color name="white">#fff</color>
+    <color name="black">#000000</color>
+
+</resources>

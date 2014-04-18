@@ -1,16 +1,16 @@
 package us.misterwok.app.fragment;
 
-import android.support.v7.app.ActionBarActivity;
 import android.app.Activity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,13 +18,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
+
+import java.util.ArrayList;
 
 import us.misterwok.app.R;
+import us.misterwok.app.adapter.MenuAdapter;
+import us.misterwok.app.obj.LeftMenuItem;
 
 public class NavigationDrawerFragment extends Fragment {
+
     private static final String STATE_SELECTED_POSITION = "selected_navigation_drawer_position";
     private static final String PREF_USER_LEARNED_DRAWER = "navigation_drawer_learned";
 
@@ -38,13 +41,6 @@ public class NavigationDrawerFragment extends Fragment {
     private int mCurrentSelectedPosition = 0;
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
-
-    public static interface NavigationDrawerCallbacks {
-        void onNavigationDrawerItemSelected(int position);
-    }
-
-    public NavigationDrawerFragment() {
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -77,16 +73,10 @@ public class NavigationDrawerFragment extends Fragment {
                 selectItem(position);
             }
         });
-        mDrawerListView.setAdapter(new ArrayAdapter<String>(
-                getActionBar().getThemedContext(),
-                android.R.layout.simple_list_item_1,
-                android.R.id.text1,
-                new String[]{
-                        getString(R.string.title_menu),
-                        getString(R.string.title_cart),
-                }
-        ));
+
+        mDrawerListView.setAdapter(new MenuAdapter(getActivity()));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
+
         return mDrawerListView;
     }
 
@@ -108,8 +98,8 @@ public class NavigationDrawerFragment extends Fragment {
                 mDrawerLayout,
                 R.drawable.ic_drawer,
                 R.string.navigation_drawer_open,
-                R.string.navigation_drawer_close
-        ) {
+                R.string.navigation_drawer_close) {
+
             @Override
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
@@ -125,14 +115,12 @@ public class NavigationDrawerFragment extends Fragment {
                 if (!isAdded()) {
                     return;
                 }
-
                 if (!mUserLearnedDrawer) {
                     mUserLearnedDrawer = true;
                     SharedPreferences sp = PreferenceManager
                             .getDefaultSharedPreferences(getActivity());
                     sp.edit().putBoolean(PREF_USER_LEARNED_DRAWER, true).apply();
                 }
-
                 getActivity().supportInvalidateOptionsMenu();
             }
         };
@@ -205,13 +193,13 @@ public class NavigationDrawerFragment extends Fragment {
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-
-        if (item.getItemId() == R.id.action_example) {
-            Toast.makeText(getActivity(), "Example action.", Toast.LENGTH_SHORT).show();
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
+    }
+
+    public void setLeftMenuItems(ArrayList<LeftMenuItem> leftMenuItems) {
+        MenuAdapter menuAdapter = new MenuAdapter(getActivity());
+        menuAdapter.setLeftMenuItem(leftMenuItems);
+        mDrawerListView.setAdapter(menuAdapter);
     }
 
     private void showGlobalContextActionBar() {
@@ -225,5 +213,8 @@ public class NavigationDrawerFragment extends Fragment {
         return ((ActionBarActivity) getActivity()).getSupportActionBar();
     }
 
+    public static interface NavigationDrawerCallbacks {
+        void onNavigationDrawerItemSelected(int position);
+    }
 
 }

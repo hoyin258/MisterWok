@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.astuetz.PagerSlidingTabStrip
+        android:id="@+id/tab_fragment_category"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="#FFF"
+        app:pstsDividerPadding="16dp"
+        app:pstsIndicatorHeight="3dp" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager_fragment_category"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="48dp" />
+
+
+    <ProgressBar
+        android:id="@+id/progress_bar_fragment_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
+    <!--<TextView-->
+    <!--android:id="@+id/text_view_fragment_category_empty"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:gravity="center"-->
+    <!--android:padding="32dp"-->
+    <!--android:text="@string/no_items"-->
+    <!--android:textSize="16sp"-->
+    <!--android:visibility="gone" />-->
+
+</uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout>
