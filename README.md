@@ -1,13 +1,17 @@
 Misterwok
 =========
+
 Our Staff: Thank you for calling Mister Wok~ May I help you.
+
 Our Client: I would like to take an order. Can I get have a Large General Tso Chicken, a Large Pork Fried Rice..,, bababa
+
 Our Staff: Oh, Thank you. It takes about 5 to ten minutes to make the food.
+
 Our Client: Great!
+
 Our Staff: Bye~~
 
-Maybe, I can simplify this process...
-
+Me: Maybe, I can simplify this process...
 
 Features
 =========
@@ -18,11 +22,9 @@ Features
   * [SwupeBackLayout](https://github.com/Issacw0ng/SwipeBackLayout) by Issac Wong
   * Facebook
 
-Reference app
-* [v2ex-daily-android](https://github.com/hoyin258/v2ex-daily-android) by yanghui
-* [A BETTER Client for Dribbble](https://github.com/Issacw0ng/Dribbo) by Issac Wong ,Kenefe_Li
-* 
-
+ * Reference app
+  * [v2ex-daily-android](https://github.com/hoyin258/v2ex-daily-android) by yanghui
+  * [A BETTER Client for Dribbble](https://github.com/Issacw0ng/Dribbo) by Issac Wong ,Kenefe_Li
 
 Thanks to Githubber.
 
