@@ -4,6 +4,7 @@ package us.misterwok.app.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -32,7 +33,8 @@ public class MainActivity extends BaseActivity
 
     public static final int INDEX_MENU = 0;
     public static final int INDEX_CART = 1;
-    public static final int INDEX_USER = 2;
+    public static final int INDEX_ABOUT = 2;
+    public static final int INDEX_USER = 3;
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle;
@@ -55,6 +57,7 @@ public class MainActivity extends BaseActivity
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
+        Intent intent;
         switch (position) {
             case INDEX_MENU:
                 getSupportFragmentManager().beginTransaction()
@@ -64,8 +67,8 @@ public class MainActivity extends BaseActivity
                         .commit();
                 break;
             case INDEX_CART:
-                Intent i = new Intent(MainActivity.this, CartActivity.class);
-                startActivity(i);
+                intent = new Intent(MainActivity.this, CartActivity.class);
+                startActivity(intent);
                 break;
             case INDEX_USER:
                 SharedPreferences sharedPreferences = getSharedPreferences(getPackageName(), Activity.MODE_PRIVATE);
@@ -75,6 +78,10 @@ public class MainActivity extends BaseActivity
                 } else {
                     onFacebookLogout();
                 }
+                break;
+            case INDEX_ABOUT:
+                intent = new Intent(MainActivity.this, AboutActivity.class);
+                startActivity(intent);
                 break;
             default:
                 break;
@@ -105,6 +112,13 @@ public class MainActivity extends BaseActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.action_about:
+                onNavigationDrawerItemSelected(INDEX_ABOUT);
+                break;
+            case R.id.action_call:
+                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + getString(R.string.store_phone_number)));
+                startActivity(intent);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -140,7 +154,7 @@ public class MainActivity extends BaseActivity
         ArrayList<LeftMenuItem> leftMenuItems = new ArrayList<LeftMenuItem>();
         leftMenuItems.add(new LeftMenuItem(R.drawable.ic_action_star, getString(R.string.title_menu)));
         leftMenuItems.add(new LeftMenuItem(R.drawable.ic_action_cart, getString(R.string.title_cart)));
-
+        leftMenuItems.add(new LeftMenuItem(R.drawable.ic_action_about, getString(R.string.title_about)));
         SharedPreferences sharedPreferences = getSharedPreferences(getPackageName(), Activity.MODE_PRIVATE);
         String name = sharedPreferences.getString(Constants.PREFERENCE_NAME, null);
         if (TextUtils.isEmpty(name)) {

@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -25,7 +24,7 @@ import us.misterwok.app.db.CartItemSQLiteHelper;
 /**
  * Created by hoyin on 15/4/14.
  */
-public class ItemDetailFragment extends DialogFragment {
+public class ItemDetailFragment extends BaseDialogFragment {
 
     public static final String KEY_ITEM_DETAIL = "item";
 

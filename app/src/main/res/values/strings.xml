@@ -4,10 +4,23 @@
     <string name="app_name">Mister Wok</string>
     <string name="app_id">172785576188622</string>
 
+    <string name="store_desc1">Delicious Chinese Food Orders To Take Out</string>
+    <string name="store_desc2">The best take-out Chinese food</string>
+    <string name="store_desc3">Phone Your Order In Advance For Quicker Service</string>
+    <string name="store_phone_number">6102698288</string>
+    <string name="store_address">3937 W Lincoln Hwy , Downingtown, PA 19335</string>
+
+    <string name="store_address_lat">39.997182</string>
+    <string name="store_address_lng">-75.742332</string>
+
+    <string name="address_for_display">Address: %s</string>
+    <string name="phone_number_for_display">Phone: %s</string>
+
     <string name="title_menu">Menu</string>
     <string name="title_cart">Cart</string>
     <string name="title_login">Login</string>
     <string name="title_logout">Logout</string>
+    <string name="title_about">About</string>
 
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -35,5 +48,6 @@
     <string name="dialog_thank_you_message">It takes about 5-10 minutes. \nSee you later :) </string>
     <string name="dialog_thank_confirm">OK</string>
     <string name="toast_item_detail_added">Added</string>
+    <string name="action_call">Call</string>
 
 </resources>

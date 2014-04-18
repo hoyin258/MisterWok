@@ -69,33 +69,34 @@ public class CartItemListFragment extends BaseFragment implements
         mConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                final EditText mPhoneNumber = new EditText(getActivity());
-                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.MATCH_PARENT);
-                mPhoneNumber.setLayoutParams(lp);
-                new AlertDialog.Builder(getActivity())
-                        .setTitle(R.string.dialog_phone_title)
-                        .setMessage(R.string.dialog_phone_message)
-                        .setView(mPhoneNumber)
-                        .setPositiveButton(R.string.dialog_phone_confirm,
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        String phoneNumber = mPhoneNumber.getText().toString();
-                                        if (!TextUtils.isEmpty(phoneNumber)) {
-                                            submitCartItems();
-                                            dialog.dismiss();
+                if (mCartItemAdapter.getCount() != 0) {
+                    final EditText mPhoneNumber = new EditText(getActivity());
+                    LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.MATCH_PARENT);
+                    mPhoneNumber.setLayoutParams(lp);
+                    new AlertDialog.Builder(getActivity())
+                            .setTitle(R.string.dialog_phone_title)
+                            .setMessage(R.string.dialog_phone_message)
+                            .setView(mPhoneNumber)
+                            .setPositiveButton(R.string.dialog_phone_confirm,
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            String phoneNumber = mPhoneNumber.getText().toString();
+                                            if (!TextUtils.isEmpty(phoneNumber)) {
+                                                submitCartItems();
+                                                dialog.dismiss();
+                                            }
                                         }
                                     }
+                            )
+                            .setNegativeButton(R.string.dialog_phone_cancel, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
                                 }
-                        )
-                        .setNegativeButton(R.string.dialog_phone_cancel, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        }).create().show();
+                            }).create().show();
+                }
             }
         });
         return rootView;

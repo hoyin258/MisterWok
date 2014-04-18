@@ -13,5 +13,7 @@
     <color name="divider_left_menu">#DDD0021b</color>
     <color name="white">#fff</color>
     <color name="black">#000000</color>
+    <color name="gray_5_6">#566666</color>
+    <color name="gray_5_3">#55333333</color>
 
 </resources>
