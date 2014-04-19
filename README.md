@@ -5,7 +5,7 @@ Our Staff: Thank you for calling Mister Wok~ May I help you.
 
 Our Client: I would like to take an order. Can I get have a Large General Tso Chicken, a Large Pork Fried Rice..,, bababa
 
-Our Staff: Oh, Thank you. It takes about 5 to ten minutes to make the food.
+Our Staff: Oh, Thank you. It takes about five to ten minutes to make the food.
 
 Our Client: Great!
 
