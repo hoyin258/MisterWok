@@ -3,6 +3,7 @@
 
     <string name="app_name">Mister Wok</string>
     <string name="app_id">172785576188622</string>
+    <string name="store_id">1</string>
 
     <string name="store_desc1">Delicious Chinese Food Orders To Take Out</string>
     <string name="store_desc2">The best take-out Chinese food</string>
@@ -32,9 +33,12 @@
 
 
     <string name="dialog_item_detail_title">Select Item</string>
-
     <string name="dialog_item_detail_confirm">Confirm</string>
     <string name="dialog_item_detail_cancel">Cancel</string>
+
+
+    <string name="dialog_create_user_title">Registration</string>
+    <string name="dialog_create_user_message">Please wait for a moment</string>
 
     <string name="cart_tax">Tax: </string>
     <string name="cart_button_confirm">Confirm</string>

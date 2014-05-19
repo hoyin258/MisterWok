@@ -5,11 +5,11 @@ package us.misterwok.app.api.obj;
  */
 public class CategoriesObj extends BaseAPIObj {
 
-    public Category[] categories;
+    public Category[] data;
 
     public static class Category {
         public int id;
         public String name;
-        public String desc;
+        public String description;
     }
 }

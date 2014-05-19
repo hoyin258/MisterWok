@@ -2,6 +2,7 @@ package us.misterwok.app.activity;
 
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -19,11 +20,16 @@ import com.facebook.Response;
 import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.model.GraphUser;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.apache.http.Header;
 
 import java.util.ArrayList;
 
 import us.misterwok.app.Constants;
 import us.misterwok.app.R;
+import us.misterwok.app.api.APIEngine;
 import us.misterwok.app.fragment.CategoryFragment;
 import us.misterwok.app.fragment.NavigationDrawerFragment;
 import us.misterwok.app.obj.LeftMenuItem;
@@ -167,6 +173,10 @@ public class MainActivity extends BaseActivity
 
     private void onFacebookLogin() {
 
+        final ProgressDialog progressDialog = ProgressDialog.show(MainActivity.this,
+                getString(R.string.dialog_create_user_title),
+                getString(R.string.dialog_create_user_message));
+
         Session.openActiveSession(this, true, new Session.StatusCallback() {
             @Override
             public void call(Session session, SessionState state,
@@ -174,15 +184,24 @@ public class MainActivity extends BaseActivity
                 if (session.isOpened()) {
                     Request.newMeRequest(session, new Request.GraphUserCallback() {
                         @Override
-                        public void onCompleted(GraphUser user, Response response) {
+                        public void onCompleted(final GraphUser user, Response response) {
                             if (user != null) {
-                                SharedPreferences sharedPreferences = getSharedPreferences(getPackageName(), MODE_PRIVATE);
-                                SharedPreferences.Editor editor = sharedPreferences.edit();
-                                editor.putString(Constants.PREFERENCE_NAME, user.getId());
-                                editor.putString(Constants.PREFERENCE_FACEBOOK_ID, user.getId());
-                                editor.commit();
-                                initDrawerItems();
-
+                                RequestParams requestParams = new RequestParams();
+                                requestParams.put("api_key", "android");
+                                requestParams.put("facebook_name", user.getName());
+                                requestParams.put("facebook_id", user.getId());
+                                APIEngine.createUser(requestParams, new JsonHttpResponseHandler() {
+                                    @Override
+                                    public void onSuccess(int statusCode, Header[] headers, String responseBody) {
+                                        progressDialog.dismiss();
+                                        SharedPreferences sharedPreferences = getSharedPreferences(getPackageName(), MODE_PRIVATE);
+                                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                                        editor.putString(Constants.PREFERENCE_NAME, user.getId());
+                                        editor.putString(Constants.PREFERENCE_FACEBOOK_ID, user.getId());
+                                        editor.commit();
+                                        initDrawerItems();
+                                    }
+                                });
                             }
                         }
                     }).executeAsync();

@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import us.misterwok.app.R;
-import us.misterwok.app.api.obj.ItemsObj;
+import us.misterwok.app.api.obj.FoodObj;
 
 /**
  * Created by hoyin on 14/4/14.
@@ -51,29 +51,29 @@ public class MenuItemView extends FrameLayout {
         mType3 = (TextView) findViewById(R.id.text_view_type_3);
     }
 
-    public void parse(ItemsObj.Item item) {
-        mName.setText(item.menu_id + ". " + item.name);
-        mDescription.setText(item.desc);
-        ImageLoader.getInstance().displayImage(item.image, mImageView);
+    public void parse(FoodObj.Food food) {
+        mName.setText(food.menu_number + ". " + food.name);
+        mDescription.setText(food.description);
+        ImageLoader.getInstance().displayImage(food.original, mImageView);
 
         mType1.setVisibility(View.GONE);
         mType2.setVisibility(View.GONE);
         mType3.setVisibility(View.GONE);
-        if (item.types != null && item.types.length > 0) {
-            ItemsObj.Type types;
-            if (item.types.length > 0 && item.types[0] != null) {
-                types = item.types[0];
-                mType1.setText(types.unit + ": " + types.price);
+        if (food.items != null && food.items.length > 0) {
+            FoodObj.Item item;
+            if (food.items.length > 0 && food.items[0] != null) {
+                item = food.items[0];
+                mType1.setText(item.size + ": " + item.price);
                 mType1.setVisibility(View.VISIBLE);
             }
-            if (item.types.length > 1 && item.types[1] != null) {
-                types = item.types[1];
-                mType2.setText(types.unit + ": " + types.price);
+            if (food.items.length > 1 && food.items[1] != null) {
+                item = food.items[1];
+                mType2.setText(item.size + ": " + item.price);
                 mType2.setVisibility(View.VISIBLE);
             }
-            if (item.types.length > 2 && item.types[2] != null) {
-                types = item.types[2];
-                mType3.setText(types.unit + ": " + types.price);
+            if (food.items.length > 2 && food.items[2] != null) {
+                item = food.items[2];
+                mType3.setText(item.size + ": " + item.price);
                 mType3.setVisibility(View.VISIBLE);
             }
         } else {

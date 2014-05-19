@@ -28,7 +28,7 @@ import org.apache.http.Header;
 
 import us.misterwok.app.R;
 import us.misterwok.app.activity.MainActivity;
-import us.misterwok.app.api.CategoryClient;
+import us.misterwok.app.api.APIEngine;
 import us.misterwok.app.api.obj.CategoriesObj;
 import us.misterwok.app.db.CartItemSQLiteHelper;
 
@@ -79,14 +79,14 @@ public class CategoryFragment extends BaseFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        CategoryClient.get(new JsonHttpResponseHandler() {
+        APIEngine.getCategories(getString(R.string.store_id), new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseBody) {
                 mProgressBar.setVisibility(View.GONE);
                 CategoriesObj categoriesObj = new Gson().fromJson(responseBody, CategoriesObj.class);
                 try {
                     mPagerSlidingTabStrip.setVisibility(View.VISIBLE);
-                    mViewPager.setAdapter(new CategoryPagerAdapter(getChildFragmentManager(), categoriesObj.categories));
+                    mViewPager.setAdapter(new CategoryPagerAdapter(getChildFragmentManager(), categoriesObj.data));
                     mPagerSlidingTabStrip.setViewPager(mViewPager);
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -151,7 +151,7 @@ public class CategoryFragment extends BaseFragment {
 
         @Override
         public Fragment getItem(int position) {
-            return ItemListFragment.newInstance(mCategories[position].id + "");
+            return FoodListFragment.newInstance(mCategories[position].id + "");
         }
     }
 }

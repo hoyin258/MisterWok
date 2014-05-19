@@ -18,14 +18,14 @@ import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 import us.misterwok.app.R;
-import us.misterwok.app.api.ItemClient;
-import us.misterwok.app.api.obj.ItemsObj;
+import us.misterwok.app.api.APIEngine;
+import us.misterwok.app.api.obj.FoodObj;
 import us.misterwok.app.widget.MenuItemView;
 
 /**
  * Created by hoyin on 14/4/14.
  */
-public class ItemListFragment extends BaseFragment implements OnRefreshListener, AdapterView.OnItemClickListener {
+public class FoodListFragment extends BaseFragment implements OnRefreshListener, AdapterView.OnItemClickListener {
 
     private static final String KEY_CATEGORY = "category_id";
 
@@ -33,8 +33,8 @@ public class ItemListFragment extends BaseFragment implements OnRefreshListener,
     ListView mListView;
     MenuAdapter menuAdapter;
 
-    public static ItemListFragment newInstance(String categoryId) {
-        ItemListFragment fragment = new ItemListFragment();
+    public static FoodListFragment newInstance(String categoryId) {
+        FoodListFragment fragment = new FoodListFragment();
         Bundle arguments = new Bundle();
         arguments.putString(KEY_CATEGORY, categoryId);
         fragment.setArguments(arguments);
@@ -75,11 +75,11 @@ public class ItemListFragment extends BaseFragment implements OnRefreshListener,
 
     private void getData() {
         mPullToRefreshLayout.setRefreshing(true);
-        ItemClient.get(getArguments().getString(KEY_CATEGORY), new JsonHttpResponseHandler() {
+        APIEngine.getFoods(getArguments().getString(KEY_CATEGORY), new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseBody) {
-                ItemsObj itemsObj = new Gson().fromJson(responseBody, ItemsObj.class);
-                menuAdapter = new MenuAdapter(itemsObj.items);
+                FoodObj itemsObj = new Gson().fromJson(responseBody, FoodObj.class);
+                menuAdapter = new MenuAdapter(itemsObj.data);
                 mListView.setAdapter(menuAdapter);
                 mPullToRefreshLayout.setRefreshComplete();
                 super.onSuccess(statusCode, headers, responseBody);
@@ -90,16 +90,16 @@ public class ItemListFragment extends BaseFragment implements OnRefreshListener,
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 
-        ItemsObj.Item item = menuAdapter.getItem(position);
-        ItemDetailFragment.newInstance(new Gson().toJson(item)).show(getFragmentManager(), "item_detail");
+        FoodObj.Food food = menuAdapter.getItem(position);
+        FoodDetailFragment.newInstance(new Gson().toJson(food)).show(getFragmentManager(), "item_detail");
 
     }
 
 
     private class MenuAdapter extends BaseAdapter {
-        ItemsObj.Item[] mItems;
+        FoodObj.Food[] mItems;
 
-        private MenuAdapter(ItemsObj.Item[] items) {
+        private MenuAdapter(FoodObj.Food[] items) {
             mItems = items;
         }
 
@@ -109,7 +109,7 @@ public class ItemListFragment extends BaseFragment implements OnRefreshListener,
         }
 
         @Override
-        public ItemsObj.Item getItem(int position) {
+        public FoodObj.Food getItem(int position) {
             return mItems[position];
         }
 
