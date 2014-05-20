@@ -20,6 +20,7 @@ import com.facebook.Response;
 import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.model.GraphUser;
+import com.google.gson.Gson;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
@@ -30,7 +31,8 @@ import java.util.ArrayList;
 import us.misterwok.app.Constants;
 import us.misterwok.app.R;
 import us.misterwok.app.api.APIEngine;
-import us.misterwok.app.fragment.CategoryFragment;
+import us.misterwok.app.api.obj.LoginObj;
+import us.misterwok.app.fragment.CategoryListFragment;
 import us.misterwok.app.fragment.NavigationDrawerFragment;
 import us.misterwok.app.obj.LeftMenuItem;
 
@@ -68,8 +70,8 @@ public class MainActivity extends BaseActivity
             case INDEX_MENU:
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.container,
-                                CategoryFragment.newInstance(),
-                                CategoryFragment.class.getCanonicalName())
+                                CategoryListFragment.newInstance(),
+                                CategoryListFragment.class.getCanonicalName())
                         .commit();
                 break;
             case INDEX_CART:
@@ -193,11 +195,14 @@ public class MainActivity extends BaseActivity
                                 APIEngine.createUser(requestParams, new JsonHttpResponseHandler() {
                                     @Override
                                     public void onSuccess(int statusCode, Header[] headers, String responseBody) {
+
+                                        LoginObj loginObj = new Gson().fromJson(responseBody, LoginObj.class);
                                         progressDialog.dismiss();
                                         SharedPreferences sharedPreferences = getSharedPreferences(getPackageName(), MODE_PRIVATE);
                                         SharedPreferences.Editor editor = sharedPreferences.edit();
                                         editor.putString(Constants.PREFERENCE_NAME, user.getId());
                                         editor.putString(Constants.PREFERENCE_FACEBOOK_ID, user.getId());
+                                        editor.putString(Constants.PREFERENCE_API_KEY, loginObj.data);
                                         editor.commit();
                                         initDrawerItems();
                                     }

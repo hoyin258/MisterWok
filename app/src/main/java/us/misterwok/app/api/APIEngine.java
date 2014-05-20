@@ -16,6 +16,9 @@ public class APIEngine {
         return BASE_URL + relativeUrl;
     }
 
+    protected static String getAbsoluteUrl(String relativeUrl, String keyApi) {
+        return BASE_URL + relativeUrl + "?token=" + keyApi;
+    }
 
     public static void getStoreDetail(String storeId, ResponseHandlerInterface responseHandler) {
         new AsyncHttpClient().get(getAbsoluteUrl(String.format("stores/%s", storeId)), null, responseHandler);
@@ -33,8 +36,8 @@ public class APIEngine {
         new AsyncHttpClient().post(getAbsoluteUrl("users"), requestParams, responseHandler);
     }
 
-    public static void createOrder(RequestParams requestParams, ResponseHandlerInterface responseHandler) {
-        new AsyncHttpClient().post(getAbsoluteUrl("orders"), requestParams, responseHandler);
+    public static void createOrder(String apiKey, RequestParams requestParams, ResponseHandlerInterface responseHandler) {
+        new AsyncHttpClient().post(getAbsoluteUrl("orders", apiKey), requestParams, responseHandler);
     }
 
 }

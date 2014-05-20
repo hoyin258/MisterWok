@@ -1,9 +1,12 @@
 package us.misterwok.app.fragment;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
@@ -21,13 +24,21 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.apache.http.Header;
+import org.json.JSONObject;
+
 import java.math.BigDecimal;
 import java.util.List;
 
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
+import us.misterwok.app.Constants;
 import us.misterwok.app.R;
+import us.misterwok.app.api.APIEngine;
 import us.misterwok.app.db.CartItemSQLiteHelper;
 
 /**
@@ -84,7 +95,7 @@ public class CartItemListFragment extends BaseFragment implements
                                         public void onClick(DialogInterface dialog, int which) {
                                             String phoneNumber = mPhoneNumber.getText().toString();
                                             if (!TextUtils.isEmpty(phoneNumber)) {
-                                                submitCartItems();
+                                                submitCartItems(phoneNumber);
                                                 dialog.dismiss();
                                             }
                                         }
@@ -164,30 +175,45 @@ public class CartItemListFragment extends BaseFragment implements
         mTotal.setText(String.format("$ %s", totalRounded));
     }
 
-    private void submitCartItems() {
+    private void submitCartItems(String phoneNumber) {
 
+        String itemIds = "";
+        String apiKey;
 
-//                RequestParams requestParams = null;
-//                CartItemClient.post(requestParams, new JsonHttpResponseHandler() {
-//                    @Override
-//                    public void onSuccess(int statusCode, Header[] headers, String responseBody) {
-////                        new CartItemSQLiteHelper().deleteCartItem()
-//                        Toast.makeText(getActivity(), "Sent", Toast.LENGTH_SHORT).show();
-//                        super.onSuccess(statusCode, headers, responseBody);
-//                    }
-//                });
-        new CartItemSQLiteHelper(getActivity()).deleteAllCartItems();
-        new AlertDialog.Builder(getActivity())
-                .setTitle(getString(R.string.dialog_thank_you_title))
-                .setMessage(getString(R.string.dialog_thank_you_message))
-                .setPositiveButton(getString(R.string.dialog_thank_confirm), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                        getActivity().onBackPressed();
-                    }
-                }).create().show();
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(
+                getActivity().getPackageName(), Activity.MODE_PRIVATE);
 
+        apiKey = sharedPreferences.getString(Constants.PREFERENCE_API_KEY, "");
+        itemIds = new CartItemSQLiteHelper(getActivity()).getAllCartItemIds();
+
+        RequestParams requestParams = new RequestParams();
+        requestParams.put("items", itemIds);
+        requestParams.put("phone", phoneNumber);
+        APIEngine.createOrder(apiKey, requestParams, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseBody) {
+                super.onSuccess(statusCode, headers, responseBody);
+                new CartItemSQLiteHelper(getActivity()).deleteAllCartItems();
+                Intent intent = new Intent(CategoryListFragment.KEY_CART_BROADCAST_RECEIVER);
+                getActivity().sendBroadcast(intent);
+                new AlertDialog.Builder(getActivity())
+                        .setTitle(getString(R.string.dialog_thank_you_title))
+                        .setMessage(getString(R.string.dialog_thank_you_message))
+                        .setPositiveButton(getString(R.string.dialog_thank_confirm), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+                                getActivity().onBackPressed();
+                            }
+                        }).create().show();
+            }
+
+            @Override
+            public void onFailure(Throwable e, JSONObject errorResponse) {
+                super.onFailure(e, errorResponse);
+
+            }
+        });
     }
 
     private class CartItemAdapter extends ArrayAdapter<ContentValues> {

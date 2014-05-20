@@ -17,7 +17,7 @@
     <string name="address_for_display">Address: %s</string>
     <string name="phone_number_for_display">Phone: %s</string>
 
-    <string name="title_menu">Menu</string>
+    <string name="title_menu">@string/app_name</string>
     <string name="title_cart">Cart</string>
     <string name="title_login">Login</string>
     <string name="title_logout">Logout</string>
@@ -28,7 +28,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_login">Login</string>
 
-    <string name="empty_item_message">No Item found</string>
+    <string name="empty_item_message">No item found</string>
     <string name="exit_confirm_message">Please click BACK again to exit</string>
 
 

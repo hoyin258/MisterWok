@@ -61,15 +61,16 @@ public class FoodDetailFragment extends DialogFragment {
                 .setPositiveButton(R.string.dialog_item_detail_confirm,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
+                                FoodObj.Item item = food.items[mListView.getCheckedItemPosition()];
                                 ContentValues contentValues = new ContentValues();
-                                contentValues.put(CartItemSQLiteHelper.KEY_ITEM_ID, food.items[whichButton-1].size.id);
-                                contentValues.put(CartItemSQLiteHelper.KEY_NAME, food.menu_number + " " + food.name);
+                                contentValues.put(CartItemSQLiteHelper.KEY_ITEM_ID, item.size.id);
+                                contentValues.put(CartItemSQLiteHelper.KEY_NAME, food.menu_number + " " + food.name + " (" + item.size.name + ")");
                                 contentValues.put(CartItemSQLiteHelper.KEY_UNIT, mUnit.getText().toString());
-                                contentValues.put(CartItemSQLiteHelper.KEY_PRICE, food.items[mListView.getCheckedItemPosition()].price);
-                                new CartItemSQLiteHelper(getActivity()).addCartItem(contentValues);
-                                Intent intent = new Intent(CategoryFragment.KEY_CART_BROADCAST_RECEIVER);
-                                getActivity().sendBroadcast(intent);
+                                contentValues.put(CartItemSQLiteHelper.KEY_PRICE, item.price);
 
+                                new CartItemSQLiteHelper(getActivity()).addCartItem(contentValues);
+                                Intent intent = new Intent(CategoryListFragment.KEY_CART_BROADCAST_RECEIVER);
+                                getActivity().sendBroadcast(intent);
                                 Toast.makeText(getActivity(), getString(R.string.toast_item_detail_added), Toast.LENGTH_SHORT).show();
                             }
                         }

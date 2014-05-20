@@ -7,4 +7,5 @@ package us.misterwok.app;
 public class Constants {
     public static final String PREFERENCE_NAME = "name";
     public static final String PREFERENCE_FACEBOOK_ID = "fb_id";
+    public static final String PREFERENCE_API_KEY = "api_key";
 }

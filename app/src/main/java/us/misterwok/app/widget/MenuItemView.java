@@ -61,19 +61,20 @@ public class MenuItemView extends FrameLayout {
         mType3.setVisibility(View.GONE);
         if (food.items != null && food.items.length > 0) {
             FoodObj.Item item;
+            mTypeGroup.setVisibility(View.VISIBLE);
             if (food.items.length > 0 && food.items[0] != null) {
                 item = food.items[0];
-                mType1.setText(item.size + ": " + item.price);
+                mType1.setText(item.size.name + ": " + item.price);
                 mType1.setVisibility(View.VISIBLE);
             }
             if (food.items.length > 1 && food.items[1] != null) {
                 item = food.items[1];
-                mType2.setText(item.size + ": " + item.price);
+                mType2.setText(item.size.name + ": " + item.price);
                 mType2.setVisibility(View.VISIBLE);
             }
             if (food.items.length > 2 && food.items[2] != null) {
                 item = food.items[2];
-                mType3.setText(item.size + ": " + item.price);
+                mType3.setText(item.size.name + ": " + item.price);
                 mType3.setVisibility(View.VISIBLE);
             }
         } else {

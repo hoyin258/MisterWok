@@ -35,7 +35,7 @@ import us.misterwok.app.db.CartItemSQLiteHelper;
 /**
  * Created by hoyin on 14/4/14.
  */
-public class CategoryFragment extends BaseFragment {
+public class CategoryListFragment extends BaseFragment {
 
     public static final String KEY_CART_BROADCAST_RECEIVER = "us.misterwok.app.cert";
 
@@ -49,12 +49,14 @@ public class CategoryFragment extends BaseFragment {
             if (mCartCount != null) {
                 int cartItemCount = new CartItemSQLiteHelper(context).getCartItemCount();
                 mCartCount.setText(cartItemCount + "");
+            } else {
+                mCartCount.setText(0 + "");
             }
         }
     };
 
-    public static CategoryFragment newInstance() {
-        CategoryFragment fragment = new CategoryFragment();
+    public static CategoryListFragment newInstance() {
+        CategoryListFragment fragment = new CategoryListFragment();
         return fragment;
     }
 
@@ -116,7 +118,7 @@ public class CategoryFragment extends BaseFragment {
         inflater.inflate(R.menu.cart, menu);
         RelativeLayout cartLayout = (RelativeLayout) menu.findItem(R.id.action_cart).getActionView();
         mCartCount = (TextView) cartLayout.findViewById(R.id.actionbar_notifcation_textview);
-        Intent intent = new Intent(CategoryFragment.KEY_CART_BROADCAST_RECEIVER);
+        Intent intent = new Intent(CategoryListFragment.KEY_CART_BROADCAST_RECEIVER);
         getActivity().sendBroadcast(intent);
     }
 

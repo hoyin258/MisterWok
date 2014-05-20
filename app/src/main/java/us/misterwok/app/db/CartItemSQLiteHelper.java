@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.text.TextUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,7 @@ public class CartItemSQLiteHelper extends SQLiteOpenHelper {
     public static final String KEY_NAME = "name";
     public static final String KEY_PRICE = "price";
     public static final String KEY_UNIT = "unit";
-    private static final String[] COLUMNS = {KEY_ID, KEY_NAME, KEY_PRICE, KEY_UNIT};
+    private static final String[] COLUMNS = {KEY_ID, KEY_ITEM_ID, KEY_NAME, KEY_PRICE, KEY_UNIT};
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "CartItemDB";
     private static final String TABLE_CART_ITEMS = "CartItems";
@@ -130,6 +131,36 @@ public class CartItemSQLiteHelper extends SQLiteOpenHelper {
         }
         cursor.close();
         return retVal;
+    }
+
+    public String getAllCartItemIds() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor =
+                db.query(TABLE_CART_ITEMS,
+                        COLUMNS,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null);
+        ContentValues map;
+        String ids = "";
+        List<String> idList = new ArrayList<String>();
+        if (cursor.moveToFirst()) {
+            do {
+                int unit = Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_UNIT)));
+                String itemId = cursor.getString(cursor.getColumnIndex(KEY_ITEM_ID));
+                for (int i = 0; i < unit; i++) {
+                    idList.add(itemId);
+                }
+            } while (cursor.moveToNext());
+        }
+
+        if (idList != null && idList.size() > 0)
+            ids = TextUtils.join(",", idList);
+        cursor.close();
+        return ids;
     }
 
     public int updateCartItem(ContentValues contentValues) {
