@@ -10,12 +10,25 @@ android {
         versionCode 1
         versionName "1.0"
     }
-    buildTypes {
+    signingConfigs {
+        debug {
+        }
         release {
-            runProguard false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            storeFile file("../misterwok.jks")
+            storePassword "misterwok"
+            keyAlias "misterwok"
+            keyPassword "misterwok"
         }
     }
+
+    buildTypes {
+        release {
+            runProguard true
+            proguardFiles  'proguard-rules.txt'
+            signingConfig signingConfigs.release
+        }
+    }
+
 }
 
 dependencies {

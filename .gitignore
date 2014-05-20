@@ -25,6 +25,7 @@ local.properties
 .gradle
 build/
 *.keystore
+*.jks
 out/
 *.iml
 local.properties
