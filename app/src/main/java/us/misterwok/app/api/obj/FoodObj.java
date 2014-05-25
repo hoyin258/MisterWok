@@ -38,5 +38,21 @@ public class FoodObj extends BaseAPIObj {
     public static class Size {
         public int id;
         public String name;
+
+
+        public String getName() {
+
+            String result = name;
+            if (result == null) {
+                result = "";
+            }
+            result = result.replace("Regular", "");
+
+            if (TextUtils.isEmpty(result)) {
+                return "$";
+            } else {
+                return name + ": $";
+            }
+        }
     }
 }

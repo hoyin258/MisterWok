@@ -54,7 +54,13 @@ public class MenuItemView extends FrameLayout {
 
     public void parse(FoodObj.Food food) {
         mName.setText(food.menu_number + ". " + food.name);
-        mDescription.setText(food.description);
+
+        mDescription.setVisibility(View.GONE);
+        if (!TextUtils.isEmpty(food.description)) {
+            mDescription.setText(food.description);
+            mDescription.setVisibility(View.VISIBLE);
+        }
+
 
         ImageLoader.getInstance().displayImage(food.getLargeImage(), mImageView);
 
@@ -66,17 +72,17 @@ public class MenuItemView extends FrameLayout {
             mTypeGroup.setVisibility(View.VISIBLE);
             if (food.items.length > 0 && food.items[0] != null) {
                 item = food.items[0];
-                mType1.setText(item.size.name + ": " + item.price);
+                mType1.setText(item.size.getName() + item.price);
                 mType1.setVisibility(View.VISIBLE);
             }
             if (food.items.length > 1 && food.items[1] != null) {
                 item = food.items[1];
-                mType2.setText(item.size.name + ": " + item.price);
+                mType2.setText(item.size.getName() + item.price);
                 mType2.setVisibility(View.VISIBLE);
             }
             if (food.items.length > 2 && food.items[2] != null) {
                 item = food.items[2];
-                mType3.setText(item.size.name + ": " + item.price);
+                mType3.setText(item.size.getName()+ item.price);
                 mType3.setVisibility(View.VISIBLE);
             }
         } else {

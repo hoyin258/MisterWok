@@ -48,6 +48,10 @@ public class FoodListFragment extends BaseFragment implements OnRefreshListener,
         mListView = (ListView) mPullToRefreshLayout.findViewById(R.id.list_view_fragment_menu);
         mListView.setEmptyView(mPullToRefreshLayout.findViewById(R.id.progress_bar_fragment_menu));
         mListView.setOnItemClickListener(this);
+
+
+        View footer =getActivity().getLayoutInflater().inflate(R.layout.view_item_footer,null,false);
+        mListView.addFooterView(footer);
         return mPullToRefreshLayout;
     }
 
