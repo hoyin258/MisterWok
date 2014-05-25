@@ -10,7 +10,8 @@ import com.loopj.android.http.ResponseHandlerInterface;
  */
 public class APIEngine {
 
-    public static final String BASE_URL = "http://obscure-falls-2759.herokuapp.com/api/v1/";
+    public static final String DOMAIN = "http://yintro.com";
+    public static final String BASE_URL = DOMAIN + "/api/v1/";
 
     protected static String getAbsoluteUrl(String relativeUrl) {
         return BASE_URL + relativeUrl;
@@ -23,6 +24,11 @@ public class APIEngine {
     public static void getStoreDetail(String storeId, ResponseHandlerInterface responseHandler) {
         new AsyncHttpClient().get(getAbsoluteUrl(String.format("stores/%s", storeId)), null, responseHandler);
     }
+
+    public static void getFullMenu(String storeId, ResponseHandlerInterface responseHandler) {
+        new AsyncHttpClient().get(getAbsoluteUrl(String.format("stores/%s/foods", storeId)), null, responseHandler);
+    }
+
 
     public static void getCategories(String storeId, ResponseHandlerInterface responseHandler) {
         new AsyncHttpClient().get(getAbsoluteUrl(String.format("stores/%s/categories", storeId)), null, responseHandler);

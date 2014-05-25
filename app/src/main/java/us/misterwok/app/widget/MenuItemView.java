@@ -1,6 +1,7 @@
 package us.misterwok.app.widget;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,7 +55,8 @@ public class MenuItemView extends FrameLayout {
     public void parse(FoodObj.Food food) {
         mName.setText(food.menu_number + ". " + food.name);
         mDescription.setText(food.description);
-        ImageLoader.getInstance().displayImage(food.original, mImageView);
+
+        ImageLoader.getInstance().displayImage(food.getLargeImage(), mImageView);
 
         mType1.setVisibility(View.GONE);
         mType2.setVisibility(View.GONE);

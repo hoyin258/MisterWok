@@ -10,15 +10,11 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 
 import com.google.gson.Gson;
-import com.loopj.android.http.JsonHttpResponseHandler;
-
-import org.apache.http.Header;
 
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 import us.misterwok.app.R;
-import us.misterwok.app.api.APIEngine;
 import us.misterwok.app.api.obj.FoodObj;
 import us.misterwok.app.widget.MenuItemView;
 
@@ -33,11 +29,14 @@ public class FoodListFragment extends BaseFragment implements OnRefreshListener,
     ListView mListView;
     MenuAdapter menuAdapter;
 
-    public static FoodListFragment newInstance(String categoryId) {
+    CategoryListFragment.FilterFoodListener mFilterFoodListener;
+
+    public static FoodListFragment newInstance(int categoryId, CategoryListFragment.FilterFoodListener filterFoodListener) {
         FoodListFragment fragment = new FoodListFragment();
         Bundle arguments = new Bundle();
-        arguments.putString(KEY_CATEGORY, categoryId);
+        arguments.putInt(KEY_CATEGORY, categoryId);
         fragment.setArguments(arguments);
+        fragment.setFilterFoodListener(filterFoodListener);
         return fragment;
     }
 
@@ -67,6 +66,16 @@ public class FoodListFragment extends BaseFragment implements OnRefreshListener,
         getData();
     }
 
+    public void setFilterFoodListener(CategoryListFragment.FilterFoodListener mFilterFoodListener) {
+        this.mFilterFoodListener = mFilterFoodListener;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        this.mFilterFoodListener = null;
+    }
+
     @Override
     public void onRefreshStarted(View view) {
         getData();
@@ -75,16 +84,21 @@ public class FoodListFragment extends BaseFragment implements OnRefreshListener,
 
     private void getData() {
         mPullToRefreshLayout.setRefreshing(true);
-        APIEngine.getFoods(getArguments().getString(KEY_CATEGORY), new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, String responseBody) {
-                FoodObj itemsObj = new Gson().fromJson(responseBody, FoodObj.class);
-                menuAdapter = new MenuAdapter(itemsObj.data);
-                mListView.setAdapter(menuAdapter);
-                mPullToRefreshLayout.setRefreshComplete();
-                super.onSuccess(statusCode, headers, responseBody);
-            }
-        });
+
+        menuAdapter = new MenuAdapter(mFilterFoodListener.getFilterFood(getArguments().getInt(KEY_CATEGORY)));
+        mListView.setAdapter(menuAdapter);
+        mPullToRefreshLayout.setRefreshComplete();
+
+//        APIEngine.getFoods(getArguments().getString(KEY_CATEGORY), new JsonHttpResponseHandler() {
+//            @Override
+//            public void onSuccess(int statusCode, Header[] headers, String responseBody) {
+//                FoodObj itemsObj = new Gson().fromJson(responseBody, FoodObj.class);
+//                menuAdapter = new MenuAdapter(itemsObj.data);
+//                mListView.setAdapter(menuAdapter);
+//                mPullToRefreshLayout.setRefreshComplete();
+//                super.onSuccess(statusCode, headers, responseBody);
+//            }
+//        });
     }
 
     @Override

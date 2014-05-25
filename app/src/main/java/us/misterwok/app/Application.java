@@ -29,6 +29,10 @@ public class Application extends android.app.Application {
                 .imageScaleType(ImageScaleType.EXACTLY)
                 .cacheOnDisc(true)
                 .displayer(new FadeInBitmapDisplayer(200))
+                .showImageOnLoading(R.drawable.empty_dish)
+                .showImageForEmptyUri(R.drawable.empty_dish)
+                .showImageOnFail(R.drawable.empty_dish)
+                .resetViewBeforeLoading(true)
                 .build();
 
         File cacheDir;
@@ -43,9 +47,12 @@ public class Application extends android.app.Application {
                 .denyCacheImageMultipleSizesInMemory()
                 .discCache(new UnlimitedDiscCache(cacheDir))
                 .defaultDisplayImageOptions(options);
+
         if (BuildConfig.DEBUG) {
             configBuilder.writeDebugLogs();
         }
+
         ImageLoader.getInstance().init(configBuilder.build());
     }
+
 }

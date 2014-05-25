@@ -5,14 +5,11 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,6 +35,7 @@ import us.misterwok.app.api.obj.LoginObj;
 import us.misterwok.app.fragment.CategoryListFragment;
 import us.misterwok.app.fragment.NavigationDrawerFragment;
 import us.misterwok.app.obj.LeftMenuItem;
+import us.misterwok.app.utils.GooglePlayServiceHelper;
 
 public class MainActivity extends BaseActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -65,15 +63,9 @@ public class MainActivity extends BaseActivity
 
         initDrawerItems();
 
-        Signature[] sigs = new Signature[0];
-        try {
-            sigs = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNATURES).signatures;
-            for (Signature sig : sigs)
-            {
-                Log.d("MyApp", "Signature hashcode : " + sig.hashCode());
-            }
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
+        GooglePlayServiceHelper googlePlayServiceHelper = new GooglePlayServiceHelper(this);
+        if (googlePlayServiceHelper.checkPlayServices()) {
+            googlePlayServiceHelper.init();
         }
 
     }

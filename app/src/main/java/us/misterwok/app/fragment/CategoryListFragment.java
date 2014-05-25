@@ -25,11 +25,15 @@ import com.google.gson.Gson;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 import us.misterwok.app.R;
 import us.misterwok.app.activity.MainActivity;
 import us.misterwok.app.api.APIEngine;
 import us.misterwok.app.api.obj.CategoriesObj;
+import us.misterwok.app.api.obj.FoodObj;
 import us.misterwok.app.db.CartItemSQLiteHelper;
 
 /**
@@ -41,8 +45,8 @@ public class CategoryListFragment extends BaseFragment {
 
     protected PagerSlidingTabStrip mPagerSlidingTabStrip;
     protected ViewPager mViewPager;
+    protected TextView mCartCount;
     protected ProgressBar mProgressBar;
-    private TextView mCartCount;
 
     private BroadcastReceiver mCertUpdateBroadcastReceiver = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
@@ -72,8 +76,8 @@ public class CategoryListFragment extends BaseFragment {
         mPagerSlidingTabStrip = (PagerSlidingTabStrip) rootView.findViewById(R.id.tab_fragment_category);
         mViewPager = (ViewPager) rootView.findViewById(R.id.viewpager_fragment_category);
         mProgressBar = (ProgressBar) rootView.findViewById(R.id.progress_bar_fragment_category);
-        mPagerSlidingTabStrip.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.VISIBLE);
+        mPagerSlidingTabStrip.setVisibility(View.GONE);
         return rootView;
     }
 
@@ -84,17 +88,29 @@ public class CategoryListFragment extends BaseFragment {
         APIEngine.getCategories(getString(R.string.store_id), new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseBody) {
-                mProgressBar.setVisibility(View.GONE);
-                CategoriesObj categoriesObj = new Gson().fromJson(responseBody, CategoriesObj.class);
-                try {
-                    mPagerSlidingTabStrip.setVisibility(View.VISIBLE);
-                    mViewPager.setAdapter(new CategoryPagerAdapter(getChildFragmentManager(), categoriesObj.data));
-                    mPagerSlidingTabStrip.setViewPager(mViewPager);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                    mProgressBar.setVisibility(View.VISIBLE);
-                }
-                super.onSuccess(statusCode, headers, responseBody);
+                final CategoriesObj categoriesObj = new Gson().fromJson(responseBody, CategoriesObj.class);
+
+                APIEngine.getFullMenu(getString(R.string.store_id), new JsonHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, String responseBody) {
+                        mProgressBar.setVisibility(View.GONE);
+                        try {
+                            FoodObj foodObj = new Gson().fromJson(responseBody, FoodObj.class);
+                            CategoryPagerAdapter categoryPagerAdapter = new CategoryPagerAdapter(getChildFragmentManager(), categoriesObj.data, foodObj.data);
+                            mViewPager.setAdapter(categoryPagerAdapter);
+                            mPagerSlidingTabStrip.setViewPager(mViewPager);
+
+                            mPagerSlidingTabStrip.setVisibility(View.VISIBLE);
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Throwable e, JSONObject errorResponse) {
+                        super.onFailure(e, errorResponse);
+                    }
+                });
             }
         });
     }
@@ -102,7 +118,7 @@ public class CategoryListFragment extends BaseFragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        ((MainActivity) activity).onSectionAttached(R.string.title_menu);
+        ((MainActivity) activity).onSectionAttached(R.string.app_name);
         getActivity().registerReceiver(mCertUpdateBroadcastReceiver, new IntentFilter(KEY_CART_BROADCAST_RECEIVER));
     }
 
@@ -133,12 +149,18 @@ public class CategoryListFragment extends BaseFragment {
         }
     }
 
-    private class CategoryPagerAdapter extends FragmentPagerAdapter {
-        CategoriesObj.Category[] mCategories;
+    public static interface FilterFoodListener {
+        public FoodObj.Food[] getFilterFood(int categoryId);
+    }
 
-        public CategoryPagerAdapter(FragmentManager fm, CategoriesObj.Category[] categories) {
+    private class CategoryPagerAdapter extends FragmentPagerAdapter implements FilterFoodListener {
+        CategoriesObj.Category[] mCategories;
+        FoodObj.Food[] mFoods;
+
+        public CategoryPagerAdapter(FragmentManager fm, CategoriesObj.Category[] categories, FoodObj.Food[] foods) {
             super(fm);
             mCategories = categories;
+            mFoods = foods;
         }
 
         @Override
@@ -153,7 +175,20 @@ public class CategoryListFragment extends BaseFragment {
 
         @Override
         public Fragment getItem(int position) {
-            return FoodListFragment.newInstance(mCategories[position].id + "");
+            FoodListFragment foodListFragment = FoodListFragment.newInstance(mCategories[position].id , this);
+            return foodListFragment;
+        }
+
+        @Override
+        public FoodObj.Food[] getFilterFood(int categoryId) {
+            ArrayList<FoodObj.Food> foods = new ArrayList<FoodObj.Food>();
+            for (int i = 0; i < mFoods.length; i++) {
+                if (mFoods[i].category_id == categoryId) {
+                    foods.add(mFoods[i]);
+                }
+            }
+            return foods.toArray(new FoodObj.Food[foods.size()]);
         }
     }
+
 }

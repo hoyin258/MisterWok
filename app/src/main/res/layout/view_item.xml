@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="180dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/demo_1" />
+         />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,7 +22,7 @@
             android:id="@+id/text_view_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Chicken with broccoli"
+            android:text=""
             android:textColor="#fff"
             android:textSize="28sp" />
 
@@ -30,7 +30,7 @@
             android:id="@+id/text_view_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Chicken with broccoli in brown sauce."
+            android:text=""
             android:textColor="#fff"
             android:textSize="18sp" />
     </LinearLayout>
@@ -48,7 +48,7 @@
             android:id="@+id/text_view_type_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Small: $4.50"
+            android:text=""
             android:textColor="#333"
             android:textSize="18sp" />
 
@@ -57,7 +57,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="Large: $8.50"
+            android:text=""
             android:textColor="#333"
             android:textSize="18sp" />
 
@@ -66,7 +66,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="Large: $8.50"
+            android:text=""
             android:textColor="#333"
             android:textSize="18sp" />
     </LinearLayout>

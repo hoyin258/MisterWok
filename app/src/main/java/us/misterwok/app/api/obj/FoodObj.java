@@ -1,5 +1,9 @@
 package us.misterwok.app.api.obj;
 
+import android.text.TextUtils;
+
+import us.misterwok.app.api.APIEngine;
+
 /**
  * Created by hoyin on 14/4/14.
  */
@@ -12,12 +16,19 @@ public class FoodObj extends BaseAPIObj {
         public String name;
         public String description;
         public boolean spicy;
-        public String original;
+        public String large;
         public Item[] items;
 
+        public int category_id;
+
+        public String getLargeImage() {
+            if (!TextUtils.isEmpty(large))
+                return APIEngine.DOMAIN + large;
+            return null;
+        }
     }
 
-    public static class Item  {
+    public static class Item {
 
         public String price;
         public Size size;
