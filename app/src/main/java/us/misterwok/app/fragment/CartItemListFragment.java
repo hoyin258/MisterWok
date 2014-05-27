@@ -12,6 +12,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -86,6 +87,7 @@ public class CartItemListFragment extends BaseFragment implements
                             LinearLayout.LayoutParams.MATCH_PARENT,
                             LinearLayout.LayoutParams.MATCH_PARENT);
                     mPhoneNumber.setLayoutParams(lp);
+                    mPhoneNumber.setInputType(InputType.TYPE_CLASS_PHONE);
                     new AlertDialog.Builder(getActivity())
                             .setTitle(R.string.dialog_phone_title)
                             .setMessage(R.string.dialog_phone_message)

@@ -14,6 +14,8 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import java.io.IOException;
 
+import us.misterwok.app.Constants;
+
 public class GooglePlayServiceHelper {
 
     public static final String EXTRA_MESSAGE = "message";
@@ -119,7 +121,11 @@ public class GooglePlayServiceHelper {
             private void sendRegistrationIdToBackend(String regId) {
                 try {
 
-                    //TODO connect API
+                    SharedPreferences sharedPreferences = activity.getSharedPreferences(
+                            activity.getPackageName(), Activity.MODE_PRIVATE);
+                    SharedPreferences.Editor edit = sharedPreferences.edit();
+                    edit.putString(Constants.PREFERENCE_GCM_REGISTRATION, regId);
+                    edit.commit();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

@@ -17,6 +17,7 @@
     <string name="address_for_display">Address: %s</string>
     <string name="phone_number_for_display">Phone: %s</string>
 
+    <string name="title_order">Order</string>
     <string name="title_menu">Menu</string>
     <string name="title_cart">Cart</string>
     <string name="title_login">Login</string>
@@ -55,4 +56,7 @@
     <string name="action_call">Call</string>
 
     <string name="tnc_image">Images for reference only </string>
+    <string name="admin_email">Email</string>
+    <string name="admin_password">password</string>
+    <string name="facebook">Facebook</string>
 </resources>

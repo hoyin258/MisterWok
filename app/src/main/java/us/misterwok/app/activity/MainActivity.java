@@ -28,6 +28,8 @@ import org.apache.http.Header;
 
 import java.util.ArrayList;
 
+import us.misterwok.app.Application;
+import us.misterwok.app.BuildVariants;
 import us.misterwok.app.Constants;
 import us.misterwok.app.R;
 import us.misterwok.app.api.APIEngine;
@@ -40,14 +42,17 @@ import us.misterwok.app.utils.GooglePlayServiceHelper;
 public class MainActivity extends BaseActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
+
     public static final int INDEX_MENU = 0;
     public static final int INDEX_CART = 1;
     public static final int INDEX_ABOUT = 2;
     public static final int INDEX_USER = 3;
+    public static final int INDEX_ORDER = 4;
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle;
     private boolean isConfirmLeft = true;
+    private ArrayList<LeftMenuItem> leftMenuItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +72,8 @@ public class MainActivity extends BaseActivity
         if (googlePlayServiceHelper.checkPlayServices()) {
             googlePlayServiceHelper.init();
         }
+
+        Application.notificationId=0;
 
     }
 
@@ -98,6 +105,19 @@ public class MainActivity extends BaseActivity
                 intent = new Intent(MainActivity.this, AboutActivity.class);
                 startActivity(intent);
                 break;
+            case INDEX_ORDER:
+
+                sharedPreferences = getSharedPreferences(getPackageName(), Activity.MODE_PRIVATE);
+                String email = sharedPreferences.getString(Constants.PREFERENCE_ADMIN_EMAIL, null);
+                if (TextUtils.isEmpty(email)) {
+                    intent = new Intent(MainActivity.this, AdminLoginActivity.class);
+                } else {
+                    intent = new Intent(MainActivity.this, OrderActivity.class);
+                }
+                startActivity(intent);
+
+                break;
+
             default:
                 break;
         }
@@ -166,7 +186,8 @@ public class MainActivity extends BaseActivity
 
     private void initDrawerItems() {
 
-        ArrayList<LeftMenuItem> leftMenuItems = new ArrayList<LeftMenuItem>();
+        leftMenuItems = new ArrayList<LeftMenuItem>();
+
         leftMenuItems.add(new LeftMenuItem(R.drawable.ic_action_star, getString(R.string.title_menu)));
         leftMenuItems.add(new LeftMenuItem(R.drawable.ic_action_cart, getString(R.string.title_cart)));
         leftMenuItems.add(new LeftMenuItem(R.drawable.ic_action_about, getString(R.string.title_about)));
@@ -177,6 +198,10 @@ public class MainActivity extends BaseActivity
         } else {
             leftMenuItems.add(new LeftMenuItem(R.drawable.ic_action_back, getString(R.string.title_logout)));
         }
+        if (BuildVariants.IS_ADMIN) {
+            leftMenuItems.add(new LeftMenuItem(R.drawable.ic_action_star, getString(R.string.title_order)));
+        }
+
         mNavigationDrawerFragment.setLeftMenuItems(leftMenuItems);
     }
 

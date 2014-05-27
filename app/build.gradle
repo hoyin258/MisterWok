@@ -28,6 +28,12 @@ android {
             signingConfig signingConfigs.release
         }
     }
+    productFlavors {
+        admin {
+        }
+        general {
+        }
+    }
 
 }
 

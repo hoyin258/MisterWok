@@ -17,6 +17,9 @@ import java.io.File;
  * Created by hoyin on 14/4/14.
  */
 public class Application extends android.app.Application {
+
+    public static  int notificationId=0;
+
     @Override
     public void onCreate() {
         super.onCreate();

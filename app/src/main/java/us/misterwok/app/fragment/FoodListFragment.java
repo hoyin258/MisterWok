@@ -93,16 +93,6 @@ public class FoodListFragment extends BaseFragment implements OnRefreshListener,
         mListView.setAdapter(menuAdapter);
         mPullToRefreshLayout.setRefreshComplete();
 
-//        APIEngine.getFoods(getArguments().getString(KEY_CATEGORY), new JsonHttpResponseHandler() {
-//            @Override
-//            public void onSuccess(int statusCode, Header[] headers, String responseBody) {
-//                FoodObj itemsObj = new Gson().fromJson(responseBody, FoodObj.class);
-//                menuAdapter = new MenuAdapter(itemsObj.data);
-//                mListView.setAdapter(menuAdapter);
-//                mPullToRefreshLayout.setRefreshComplete();
-//                super.onSuccess(statusCode, headers, responseBody);
-//            }
-//        });
     }
 
     @Override

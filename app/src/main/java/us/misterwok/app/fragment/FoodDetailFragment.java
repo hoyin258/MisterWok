@@ -63,7 +63,7 @@ public class FoodDetailFragment extends DialogFragment {
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 FoodObj.Item item = food.items[mListView.getCheckedItemPosition()];
                                 ContentValues contentValues = new ContentValues();
-                                contentValues.put(CartItemSQLiteHelper.KEY_ITEM_ID, item.size.id);
+                                contentValues.put(CartItemSQLiteHelper.KEY_ITEM_ID, item.id);
                                 contentValues.put(CartItemSQLiteHelper.KEY_NAME, food.menu_number + " " + food.name + " (" + item.size.name + ")");
                                 contentValues.put(CartItemSQLiteHelper.KEY_UNIT, mUnit.getText().toString());
                                 contentValues.put(CartItemSQLiteHelper.KEY_PRICE, item.price);

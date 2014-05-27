@@ -30,13 +30,14 @@ public class FoodObj extends BaseAPIObj {
 
     public static class Item {
 
+        public int id;
         public String price;
         public Size size;
 
     }
 
     public static class Size {
-        public int id;
+
         public String name;
 
 

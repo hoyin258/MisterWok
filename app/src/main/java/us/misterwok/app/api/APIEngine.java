@@ -29,6 +29,9 @@ public class APIEngine {
         new AsyncHttpClient().get(getAbsoluteUrl(String.format("stores/%s/foods", storeId)), null, responseHandler);
     }
 
+    public static void getOrder(String storeId,RequestParams requestParams, ResponseHandlerInterface responseHandler) {
+        new AsyncHttpClient().get(getAbsoluteUrl(String.format("stores/%s/orders", storeId)), requestParams, responseHandler);
+    }
 
     public static void getCategories(String storeId, ResponseHandlerInterface responseHandler) {
         new AsyncHttpClient().get(getAbsoluteUrl(String.format("stores/%s/categories", storeId)), null, responseHandler);
@@ -44,6 +47,10 @@ public class APIEngine {
 
     public static void createOrder(String apiKey, RequestParams requestParams, ResponseHandlerInterface responseHandler) {
         new AsyncHttpClient().post(getAbsoluteUrl("orders", apiKey), requestParams, responseHandler);
+    }
+
+    public static void registerAdmin(RequestParams requestParams, ResponseHandlerInterface responseHandler) {
+        new AsyncHttpClient().post(getAbsoluteUrl("admin_user"), requestParams, responseHandler);
     }
 
 }
