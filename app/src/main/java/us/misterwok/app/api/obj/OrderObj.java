@@ -14,11 +14,13 @@ public class OrderObj extends BaseAPIObj {
 
 
     public static class Order {
+        public int id;
         public String order_num;
         public String created_at;
         public String phone;
         public Item[] items;
         public User user;
+        public int status;
 
         public String getCreatedAt() {
             SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");

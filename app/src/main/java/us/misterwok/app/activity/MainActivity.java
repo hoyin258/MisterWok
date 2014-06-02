@@ -13,7 +13,6 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.facebook.Request;
 import com.facebook.Response;
@@ -25,6 +24,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import org.apache.http.Header;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -51,7 +51,6 @@ public class MainActivity extends BaseActivity
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle;
-    private boolean isConfirmLeft = true;
     private ArrayList<LeftMenuItem> leftMenuItems;
 
     @Override
@@ -73,7 +72,7 @@ public class MainActivity extends BaseActivity
             googlePlayServiceHelper.init();
         }
 
-        Application.notificationId=0;
+        Application.notificationId = 0;
 
     }
 
@@ -96,6 +95,7 @@ public class MainActivity extends BaseActivity
                 SharedPreferences sharedPreferences = getSharedPreferences(getPackageName(), Activity.MODE_PRIVATE);
                 String name = sharedPreferences.getString(Constants.PREFERENCE_NAME, null);
                 if (TextUtils.isEmpty(name)) {
+
                     onFacebookLogin();
                 } else {
                     onFacebookLogout();
@@ -164,15 +164,6 @@ public class MainActivity extends BaseActivity
         Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
     }
 
-    @Override
-    public void onBackPressed() {
-        if (isConfirmLeft) {
-            Toast.makeText(MainActivity.this, R.string.exit_confirm_message, Toast.LENGTH_SHORT).show();
-            isConfirmLeft = false;
-        } else {
-            super.onBackPressed();
-        }
-    }
 
     public void onCartButtonClick(View view) {
         SharedPreferences sharedPreferences = getSharedPreferences(getPackageName(), MODE_PRIVATE);
@@ -220,11 +211,16 @@ public class MainActivity extends BaseActivity
                         @Override
                         public void onCompleted(final GraphUser user, Response response) {
                             if (user != null) {
+                                SharedPreferences sharedPreferences = getSharedPreferences(
+                                        getPackageName(), Activity.MODE_PRIVATE);
+                                String gcmId = sharedPreferences.getString(Constants.PREFERENCE_GCM_REGISTRATION, "");
+
                                 RequestParams requestParams = new RequestParams();
                                 requestParams.put("api_key", "android");
                                 requestParams.put("facebook_name", user.getName());
                                 requestParams.put("facebook_id", user.getId());
-                                APIEngine.createUser(requestParams, new JsonHttpResponseHandler() {
+                                requestParams.put("gcm", gcmId);
+                                APIEngine.loginUser(requestParams, new JsonHttpResponseHandler() {
                                     @Override
                                     public void onSuccess(int statusCode, Header[] headers, String responseBody) {
 
@@ -237,11 +233,21 @@ public class MainActivity extends BaseActivity
                                         editor.putString(Constants.PREFERENCE_API_KEY, loginObj.data);
                                         editor.commit();
                                         initDrawerItems();
+                                        onNavigationDrawerItemSelected(1);
+
+                                    }
+
+                                    @Override
+                                    public void onFailure(Throwable e, JSONObject errorResponse) {
+                                        progressDialog.dismiss();
+                                        super.onFailure(e, errorResponse);
                                     }
                                 });
                             }
                         }
                     }).executeAsync();
+                } else {
+                    progressDialog.dismiss();
                 }
             }
         });
@@ -260,7 +266,10 @@ public class MainActivity extends BaseActivity
         }
         SharedPreferences sharedPreferences = getSharedPreferences(getPackageName(), MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.clear();
+
+        editor.putString(Constants.PREFERENCE_NAME, null);
+        editor.putString(Constants.PREFERENCE_FACEBOOK_ID, null);
+        editor.putString(Constants.PREFERENCE_API_KEY, null);
         editor.commit();
         initDrawerItems();
     }

@@ -1,6 +1,7 @@
 package us.misterwok.app.service;
 
 import android.app.IntentService;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -61,6 +62,9 @@ public class GcmIntentService extends IntentService {
                         .setStyle(new NotificationCompat.BigTextStyle()
                                 .bigText(msg))
                         .setContentText(msg)
+                        .setDefaults(Notification.DEFAULT_SOUND |
+                                Notification.DEFAULT_VIBRATE |
+                                Notification.DEFAULT_LIGHTS)
                         .setAutoCancel(true);
 
 

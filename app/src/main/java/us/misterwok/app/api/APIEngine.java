@@ -10,7 +10,7 @@ import com.loopj.android.http.ResponseHandlerInterface;
  */
 public class APIEngine {
 
-    public static final String DOMAIN = "http://yintro.com";
+    public static final String DOMAIN = "http://menu.yintro.com";
     public static final String BASE_URL = DOMAIN + "/api/v1/";
 
     protected static String getAbsoluteUrl(String relativeUrl) {
@@ -25,32 +25,35 @@ public class APIEngine {
         new AsyncHttpClient().get(getAbsoluteUrl(String.format("stores/%s", storeId)), null, responseHandler);
     }
 
-    public static void getFullMenu(String storeId, ResponseHandlerInterface responseHandler) {
-        new AsyncHttpClient().get(getAbsoluteUrl(String.format("stores/%s/foods", storeId)), null, responseHandler);
-    }
-
-    public static void getOrder(String storeId,RequestParams requestParams, ResponseHandlerInterface responseHandler) {
-        new AsyncHttpClient().get(getAbsoluteUrl(String.format("stores/%s/orders", storeId)), requestParams, responseHandler);
-    }
-
     public static void getCategories(String storeId, ResponseHandlerInterface responseHandler) {
         new AsyncHttpClient().get(getAbsoluteUrl(String.format("stores/%s/categories", storeId)), null, responseHandler);
     }
 
-    public static void getFoods(String catId, ResponseHandlerInterface responseHandler) {
-        new AsyncHttpClient().get(getAbsoluteUrl(String.format("categories/%s", catId)), null, responseHandler);
+    public static void getFoods(String storeId, ResponseHandlerInterface responseHandler) {
+        new AsyncHttpClient().get(getAbsoluteUrl(String.format("stores/%s/foods", storeId)), null, responseHandler);
     }
 
-    public static void createUser(RequestParams requestParams, ResponseHandlerInterface responseHandler) {
+    public static void loginUser(RequestParams requestParams, ResponseHandlerInterface responseHandler) {
         new AsyncHttpClient().post(getAbsoluteUrl("users"), requestParams, responseHandler);
+    }
+
+    public static void loginAdmin(RequestParams requestParams, ResponseHandlerInterface responseHandler) {
+        new AsyncHttpClient().post(getAbsoluteUrl("admin_user"), requestParams, responseHandler);
     }
 
     public static void createOrder(String apiKey, RequestParams requestParams, ResponseHandlerInterface responseHandler) {
         new AsyncHttpClient().post(getAbsoluteUrl("orders", apiKey), requestParams, responseHandler);
     }
 
-    public static void registerAdmin(RequestParams requestParams, ResponseHandlerInterface responseHandler) {
-        new AsyncHttpClient().post(getAbsoluteUrl("admin_user"), requestParams, responseHandler);
+    public static void getOrder(RequestParams requestParams, ResponseHandlerInterface responseHandler) {
+        new AsyncHttpClient().get(getAbsoluteUrl("admin_user/orders"), requestParams, responseHandler);
     }
 
+    public static void setOrderReceived(int orderId, RequestParams requestParams, ResponseHandlerInterface responseHandler) {
+        new AsyncHttpClient().post(getAbsoluteUrl(String.format("admin_user/orders/%s/received", orderId+"")), requestParams, responseHandler);
+    }
+
+    public static void setOrderMade(int orderId, RequestParams requestParams, ResponseHandlerInterface responseHandler) {
+        new AsyncHttpClient().post(getAbsoluteUrl(String.format("admin_user/orders/%s/made", orderId+"")), requestParams, responseHandler);
+    }
 }

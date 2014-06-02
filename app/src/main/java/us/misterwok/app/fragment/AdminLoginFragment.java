@@ -60,10 +60,9 @@ public class AdminLoginFragment extends BaseFragment {
                 requestParams.put("gcm_id", gcmId);
 
                 getActivity().setProgressBarIndeterminateVisibility(true);
-                APIEngine.registerAdmin(requestParams, new JsonHttpResponseHandler() {
+                APIEngine.loginAdmin(requestParams, new JsonHttpResponseHandler() {
                             @Override
                             public void onSuccess(int statusCode, Header[] headers, String responseBody) {
-
                                 getActivity().setProgressBarIndeterminateVisibility(false);
                                 SharedPreferences sharedPreferences = getActivity().getSharedPreferences(
                                         getActivity().getPackageName(), Activity.MODE_PRIVATE);

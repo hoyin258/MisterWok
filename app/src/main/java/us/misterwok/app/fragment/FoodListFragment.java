@@ -15,21 +15,21 @@ import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 import us.misterwok.app.R;
-import us.misterwok.app.api.obj.FoodObj;
+import us.misterwok.app.api.obj.MenuObj;
 import us.misterwok.app.widget.MenuItemView;
 
 /**
  * Created by hoyin on 14/4/14.
  */
-public class FoodListFragment extends BaseFragment implements OnRefreshListener, AdapterView.OnItemClickListener {
+public class FoodListFragment extends BaseFragment implements AdapterView.OnItemClickListener, OnRefreshListener {
 
     private static final String KEY_CATEGORY = "category_id";
 
-    PullToRefreshLayout mPullToRefreshLayout;
-    ListView mListView;
-    MenuAdapter menuAdapter;
+    private PullToRefreshLayout mPullToRefreshLayout;
+    private ListView mListView;
+    private MenuAdapter mMenuAdapter;
+    private CategoryListFragment.FilterFoodListener mFilterFoodListener;
 
-    CategoryListFragment.FilterFoodListener mFilterFoodListener;
 
     public static FoodListFragment newInstance(int categoryId, CategoryListFragment.FilterFoodListener filterFoodListener) {
         FoodListFragment fragment = new FoodListFragment();
@@ -50,7 +50,7 @@ public class FoodListFragment extends BaseFragment implements OnRefreshListener,
         mListView.setOnItemClickListener(this);
 
 
-        View footer =getActivity().getLayoutInflater().inflate(R.layout.view_item_footer,null,false);
+        View footer = getActivity().getLayoutInflater().inflate(R.layout.view_item_footer, null, false);
         mListView.addFooterView(footer);
         return mPullToRefreshLayout;
     }
@@ -88,26 +88,24 @@ public class FoodListFragment extends BaseFragment implements OnRefreshListener,
 
     private void getData() {
         mPullToRefreshLayout.setRefreshing(true);
-
-        menuAdapter = new MenuAdapter(mFilterFoodListener.getFilterFood(getArguments().getInt(KEY_CATEGORY)));
-        mListView.setAdapter(menuAdapter);
+        mMenuAdapter = new MenuAdapter(mFilterFoodListener.getFilterFood(getArguments().getInt(KEY_CATEGORY)));
+        mListView.setAdapter(mMenuAdapter);
         mPullToRefreshLayout.setRefreshComplete();
-
     }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 
-        FoodObj.Food food = menuAdapter.getItem(position);
+        MenuObj.Food food = mMenuAdapter.getItem(position);
         FoodDetailFragment.newInstance(new Gson().toJson(food)).show(getFragmentManager(), "item_detail");
 
     }
 
 
     private class MenuAdapter extends BaseAdapter {
-        FoodObj.Food[] mItems;
+        MenuObj.Food[] mItems;
 
-        private MenuAdapter(FoodObj.Food[] items) {
+        private MenuAdapter(MenuObj.Food[] items) {
             mItems = items;
         }
 
@@ -117,7 +115,7 @@ public class FoodListFragment extends BaseFragment implements OnRefreshListener,
         }
 
         @Override
-        public FoodObj.Food getItem(int position) {
+        public MenuObj.Food getItem(int position) {
             return mItems[position];
         }
 

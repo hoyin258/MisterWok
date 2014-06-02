@@ -13,6 +13,11 @@ public class Constants {
     public static final String PREFERENCE_ADMIN_EMAIL = "admin_email";
     public static final String PREFERENCE_ADMIN_PASSWORD = "admin_password";
 
+
+    public static final String PREFERENCE_MENU_DATE = "menu_date";
+    public static final String PREFERENCE_MENU_DATA = "menu_data";
+
+
     public static final String PREFERENCE_GCM_REGISTRATION= "gcm_registration";
 
 }

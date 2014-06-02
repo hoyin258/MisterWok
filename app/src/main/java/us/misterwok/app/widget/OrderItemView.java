@@ -1,7 +1,9 @@
 package us.misterwok.app.widget;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -11,7 +13,15 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.apache.http.Header;
+import org.json.JSONObject;
+
+import us.misterwok.app.Constants;
 import us.misterwok.app.R;
+import us.misterwok.app.api.APIEngine;
 import us.misterwok.app.api.obj.OrderObj;
 
 /**
@@ -23,6 +33,8 @@ public class OrderItemView extends FrameLayout {
     private TextView textViewOrderNum;
     private TextView textViewOrderPhone;
     private TextView textViewUserName;
+
+    private TextView buttonAction;
     private LinearLayout linearLayoutContainer;
     private Button buttonFacebook;
 
@@ -33,6 +45,7 @@ public class OrderItemView extends FrameLayout {
         textViewOrderPhone = (TextView) findViewById(R.id.text_view_order_phone);
         linearLayoutContainer = (LinearLayout) findViewById(R.id.linear_layout_container);
         buttonFacebook = (Button) findViewById(R.id.button_facebook);
+        buttonAction = (Button) findViewById(R.id.button_action);
     }
 
     public OrderItemView(Context context) {
@@ -60,6 +73,71 @@ public class OrderItemView extends FrameLayout {
         textViewOrderNum.setText("Number : " + order.order_num);
         textViewOrderPhone.setText("Phone : " + order.phone);
         textViewUserName.setText("Name : " + order.user.facebook_name);
+
+
+        buttonAction.setVisibility(View.VISIBLE);
+        if (order.status == 0) {
+            buttonAction.setText(R.string.action_received);
+            buttonAction.setBackgroundColor(getResources().getColor(R.color.green));
+            buttonAction.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    SharedPreferences sharedPreferences = getContext().getSharedPreferences(
+                            getContext().getPackageName(), Activity.MODE_PRIVATE);
+                    String email = sharedPreferences.getString(Constants.PREFERENCE_ADMIN_EMAIL, "");
+                    String password = sharedPreferences.getString(Constants.PREFERENCE_ADMIN_PASSWORD, "");
+
+                    RequestParams requestParams = new RequestParams();
+                    requestParams.put("email", email);
+                    requestParams.put("password", password);
+
+                    APIEngine.setOrderReceived(order.id, requestParams, new JsonHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, String responseBody) {
+                            super.onSuccess(statusCode, headers, responseBody);
+                            order.status = 1;
+                            parse(order);
+                            invalidate();
+                        }
+
+                        @Override
+                        public void onFailure(Throwable e, JSONObject errorResponse) {
+                            super.onFailure(e, errorResponse);
+                        }
+                    });
+                }
+            });
+        } else if (order.status == 1) {
+            buttonAction.setText(R.string.action_made);
+            buttonAction.setBackgroundColor(getResources().getColor(R.color.blue));
+            buttonAction.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    SharedPreferences sharedPreferences = getContext().getSharedPreferences(
+                            getContext().getPackageName(), Activity.MODE_PRIVATE);
+                    String email = sharedPreferences.getString(Constants.PREFERENCE_ADMIN_EMAIL, "");
+                    String password = sharedPreferences.getString(Constants.PREFERENCE_ADMIN_PASSWORD, "");
+
+                    RequestParams requestParams = new RequestParams();
+                    requestParams.put("email", email);
+                    requestParams.put("password", password);
+
+                    APIEngine.setOrderMade(order.id, requestParams, new JsonHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, String responseBody) {
+                            order.status = 2;
+                            parse(order);
+                            invalidate();
+                            super.onSuccess(statusCode, headers, responseBody);
+                        }
+                    });
+                }
+            });
+        } else {
+            buttonAction.setVisibility(View.GONE);
+        }
 
         buttonFacebook.setOnClickListener(new OnClickListener() {
             @Override

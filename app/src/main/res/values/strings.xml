@@ -37,7 +37,6 @@
     <string name="dialog_item_detail_confirm">Confirm</string>
     <string name="dialog_item_detail_cancel">Cancel</string>
 
-
     <string name="dialog_create_user_title">Registration</string>
     <string name="dialog_create_user_message">Please wait for a moment</string>
 
@@ -45,12 +44,14 @@
     <string name="cart_button_confirm">Confirm</string>
 
     <string name="dialog_phone_title">Thank you</string>
-    <string name="dialog_phone_message">Please enter your phone number</string>
+    <string name="dialog_phone_message">Please enter your contact phone number</string>
     <string name="dialog_phone_confirm">Confirm</string>
     <string name="dialog_phone_cancel">Cancel</string>
 
     <string name="dialog_thank_you_title">Thank You</string>
-    <string name="dialog_thank_you_message">It takes about 5-10 minutes. \nSee you later :) </string>
+    <string name="dialog_thank_you_message">Thank you for ordering.\n
+        It takes about 5-10 minutes. \n
+        See you later :) </string>
     <string name="dialog_thank_confirm">OK</string>
     <string name="toast_item_detail_added">Added</string>
     <string name="action_call">Call</string>
@@ -59,4 +60,8 @@
     <string name="admin_email">Email</string>
     <string name="admin_password">password</string>
     <string name="facebook">Facebook</string>
+
+
+    <string name="action_received">Received</string>
+    <string name="action_made">Made</string>
 </resources>

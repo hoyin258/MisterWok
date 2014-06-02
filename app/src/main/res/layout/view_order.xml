@@ -53,16 +53,35 @@
                 android:text="" />
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/button_facebook"
-            android:layout_width="60dp"
-            android:layout_height="30dp"
-            android:layout_marginRight="8dp"
-            android:background="@color/app_color"
-            android:text="@string/facebook"
-            android:textColor="@color/white"
-            android:textSize="12sp" />
+            <Button
+                android:id="@+id/button_action"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@color/green"
+                android:text="@string/action_received"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+
+            <Button
+                android:id="@+id/button_facebook"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="8dp"
+                android:background="@color/app_color"
+                android:text="@string/facebook"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+
+        </LinearLayout>
 
     </LinearLayout>
 

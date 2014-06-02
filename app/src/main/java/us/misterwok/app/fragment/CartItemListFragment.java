@@ -108,7 +108,9 @@ public class CartItemListFragment extends BaseFragment implements
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.dismiss();
                                 }
-                            }).create().show();
+                            })
+                            .setCancelable(false)
+                            .create().show();
                 }
             }
         });

@@ -19,7 +19,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 
 import us.misterwok.app.R;
-import us.misterwok.app.api.obj.FoodObj;
+import us.misterwok.app.api.obj.MenuObj;
 import us.misterwok.app.db.CartItemSQLiteHelper;
 
 /**
@@ -31,7 +31,7 @@ public class FoodDetailFragment extends DialogFragment {
 
     private ListView mListView;
     private EditText mUnit;
-    private FoodObj.Food food;
+    private MenuObj.Food food;
 
     public static FoodDetailFragment newInstance(String foodInJson) {
         FoodDetailFragment itemDetailFragment = new FoodDetailFragment();
@@ -45,7 +45,7 @@ public class FoodDetailFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         String itemInString = getArguments().getString(KEY_ITEM_DETAIL);
-        food = new Gson().fromJson(itemInString, FoodObj.Food.class);
+        food = new Gson().fromJson(itemInString, MenuObj.Food.class);
 
         View rootView = getActivity().getLayoutInflater().inflate(R.layout.fragment_item_detail, null);
         mUnit = (EditText) rootView.findViewById(R.id.edit_text_unit);
@@ -61,7 +61,7 @@ public class FoodDetailFragment extends DialogFragment {
                 .setPositiveButton(R.string.dialog_item_detail_confirm,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
-                                FoodObj.Item item = food.items[mListView.getCheckedItemPosition()];
+                                MenuObj.Item item = food.items[mListView.getCheckedItemPosition()];
                                 ContentValues contentValues = new ContentValues();
                                 contentValues.put(CartItemSQLiteHelper.KEY_ITEM_ID, item.id);
                                 contentValues.put(CartItemSQLiteHelper.KEY_NAME, food.menu_number + " " + food.name + " (" + item.size.name + ")");
@@ -86,7 +86,7 @@ public class FoodDetailFragment extends DialogFragment {
         return builder.create();
     }
 
-    private class SizeAdapter extends ArrayAdapter<FoodObj.Item> {
+    private class SizeAdapter extends ArrayAdapter<MenuObj.Item> {
         int resourceId;
 
         public SizeAdapter(Context context, int resource) {

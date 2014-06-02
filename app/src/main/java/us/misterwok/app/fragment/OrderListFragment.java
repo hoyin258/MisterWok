@@ -135,7 +135,7 @@ public class OrderListFragment extends BaseFragment implements OnRefreshListener
         requestParams.put("page", page + "");
         requestParams.put("per_page", per_page + "");
 
-        APIEngine.getOrder(getString(R.string.store_id), requestParams, new JsonHttpResponseHandler() {
+        APIEngine.getOrder(requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseBody) {
 

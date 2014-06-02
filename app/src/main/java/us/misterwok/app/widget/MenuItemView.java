@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import us.misterwok.app.R;
-import us.misterwok.app.api.obj.FoodObj;
+import us.misterwok.app.api.obj.MenuObj;
 
 /**
  * Created by hoyin on 14/4/14.
@@ -52,7 +52,7 @@ public class MenuItemView extends FrameLayout {
         mType3 = (TextView) findViewById(R.id.text_view_type_3);
     }
 
-    public void parse(FoodObj.Food food) {
+    public void parse(MenuObj.Food food) {
         mName.setText(food.menu_number + ". " + food.name);
 
         mDescription.setVisibility(View.GONE);
@@ -68,7 +68,7 @@ public class MenuItemView extends FrameLayout {
         mType2.setVisibility(View.GONE);
         mType3.setVisibility(View.GONE);
         if (food.items != null && food.items.length > 0) {
-            FoodObj.Item item;
+            MenuObj.Item item;
             mTypeGroup.setVisibility(View.VISIBLE);
             if (food.items.length > 0 && food.items[0] != null) {
                 item = food.items[0];
